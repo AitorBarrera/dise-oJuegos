@@ -16,52 +16,137 @@
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
                       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous"/>
                 <link rel="stylesheet" href="css/style.css"/>
+                
+                <!-- JQuery -->
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             </head>
             
-            <body>
-                
-                <main>
-                    <div class="container">
-                        <div class="row">
-                            <xsl:for-each select="juegos/juego">
-                <div class="col-12">
-                    <div class="border border-1 rounded my-3">
-                        <div class="row">
-                            <div class="col-2 text-center">
-                                <img src="https://www.metacritic.com/a/img/resize/32e0a7f3e8a36d4a12553d053b4f429a2cc1f3c3/catalog/provider/6/3/6-1-4763-13.jpg?auto=webp&amp;fit=cover&amp;height=132&amp;width=88"
-                                    alt="" srcset="" class="w-100 h-100" />
+            <body class="bg-dark">
+                <header class="mb-5">
+                    <nav class="navbar navbar-expand-sm navbar-light bg-white px-5 py-4 position-relative">
+                        <a class="navbar-brand position-absolute" href="#"><img src="Metacritic_logo.png" alt="" srcset="" class=""/></a>
+                            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                                    aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                                <ul class="navbar-nav me-auto mt-2 mt-lg-0 mx-auto">
+                                    <li class="nav-item">
+                                        <button
+                                            type="button"
+                                            class="btn btn-dark me-5"
+                                            onclick="$('.descripcion').addClass('d-none');
+                                            $('.juego').removeClass('col-12').addClass('col-4');
+                                            $('.carta').addClass('flex-column text-center')
+                                            "
+                                            >
+                                            Solo portada
+                                        </button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button
+                                            type="button"
+                                            class="btn btn-dark me-5"
+                                            onclick="$('.descripcion').removeClass('d-none').add('d-flex');"
+                                            >
+                                            Con descripcion
+                                        </button>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="col-10 py-1 row flex-column">
-                                <h4 class="">1. The Legend of Zelda: Ocarina of Time </h4>
-                                <span class="">Nov 23, 1998</span>
-                                <p class="my-3">As a young boy, Link is tricked by Ganondorf, the King of the Gerudo Thieves. The
-                                    evil
-                                    human uses Link to gain access to the Sacred Realm, where he places his tainted
-                                    hands on
-                                    Triforce and transforms the beautiful Hyrulean landscape into a barren wasteland.
-                                    Link
-                                    is determined to fix the problems he helped to create, so with the help of Rauru he
-                                    travels through time gathering the powers of the Seven Sages.</p>
-                                    <p class="my-2">Puntuacion: 99</p>
+                        </nav>
+                    </header>
+                    <main>
+                        <div class="container">
+                            <div class="row">
+                                <xsl:for-each select="juegos/juego">
+                                    <xsl:variable name="level1Count" select="position()"/>
+                                    <xsl:choose>
+                                        <xsl:when test="$level1Count mod 2=1">
+                                            <div class="col-12 my-3 juego">
+                                                <div class="row border border-1 rounded h-100 bg-white justify-content-center carta">
+                                                    <div class="col-1">
+                                                        <div class="row align-items-center h-100">
+                                                            <xsl:choose>
+                                                                <xsl:when test="$level1Count &lt; 10">
+                                                                    <h1 class="col-12 display-1 fw-bolder text-center ranking"><xsl:value-of select="substring(titulo/text(),1,1)"/></h1>
+                                                                </xsl:when>
+                                                                <xsl:otherwise>
+                                                                    <h1 class="col-12 display-1 fw-bolder text-center ranking"><xsl:value-of select="substring(titulo/text(),1,2)"/></h1>
+                                                                </xsl:otherwise>
+                                                            </xsl:choose>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2 text-center portada my-auto">
+                                                        <img src="{portada}"
+                                                             alt="" srcset="" class="w-100" />
+                                                    </div>
+                                                    <div class="col-9 px-5 py-4 row flex-column text-center texto">
+                                                        <xsl:choose>
+                                                            <xsl:when test="$level1Count &lt; 10">
+                                                                <h2 class="fw-bold"><xsl:value-of select="substring(titulo/text(),4)"/></h2>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <h2 class="fw-bold"><xsl:value-of select="substring(titulo/text(),5)"/></h2>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                        <span class="mb-2"><xsl:value-of select="fecha"/></span>
+                                                        <p class="mb-auto mt-auto descripcion"><xsl:value-of select="descripcion"/></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <div class="col-12 my-3 juego">
+                                                <div class="row border border-1 rounded h-100 bg-white justify-content-center flex-row-reverse carta">
+                                                    <div class="col-1">
+                                                        <div class="row align-items-center h-100">
+                                                            <xsl:choose>
+                                                                <xsl:when test="$level1Count &lt; 10">
+                                                                    <h1 class="col-12 display-1 fw-bolder text-center ranking"><xsl:value-of select="substring(titulo/text(),1,1)"/></h1>
+                                                                </xsl:when>
+                                                                <xsl:otherwise>
+                                                                    <h1 class="col-12 display-1 fw-bolder text-center ranking"><xsl:value-of select="substring(titulo/text(),1,2)"/></h1>
+                                                                </xsl:otherwise>
+                                                            </xsl:choose>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2 text-center portada my-auto">
+                                                        <img src="{portada}"
+                                                             alt="" srcset="" class="w-100" />
+                                                    </div>
+                                                    <div class="col-9 px-5 py-4 row flex-column text-center texto">
+                                                        <xsl:choose>
+                                                            <xsl:when test="$level1Count &lt; 10">
+                                                                <h2 class="fw-bold"><xsl:value-of select="substring(titulo/text(),4)"/></h2>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <h2 class="fw-bold"><xsl:value-of select="substring(titulo/text(),5)"/></h2>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                        <span class="mb-2"><xsl:value-of select="fecha"/></span>
+                                                        <p class="mb-auto mt-auto descripcion"><xsl:value-of select="descripcion"/></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
                             </div>
                         </div>
-                    </div>
-                </div>
-                            </xsl:for-each>
-                        </div>
-                    </div>
-                </main>
-                <!-- Bootstrap JavaScript Libraries -->
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-                        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
-                </script>
+                    </main>
+                    <!-- Bootstrap JavaScript Libraries -->
+                    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+                            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+                    </script>
+                    
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+                            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+                    </script>
+                </body>
                 
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
-                        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
-                </script>
-            </body>
+            </html>
             
-        </html>
-        
-    </xsl:template>
-</xsl:stylesheet>
+        </xsl:template>
+    </xsl:stylesheet>
