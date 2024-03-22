@@ -21,11 +21,11 @@
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
             </head>
             
-            <body class="bg-dark">
-                <header class="mb-5">
-                    <nav class="navbar navbar-expand-md navbar-light bg-white px-5 py-3 position-relative ">
-                        <a class="navbar-brand col-4 col-md-2 position-absolute d-none d-md-flex" href="#">
-                            <img src="Metacritic_logo.png" alt="" srcset="" class="img-fluid"/>
+            <body class="bg-black">
+                <header class="">
+                    <nav class="navbar navbar-expand-md navbar-dark bg-dark text-warning px-5 py-3 position-relative ">
+                        <a class="navbar-brand col-2 col-lg-1 position-absolute d-none d-md-flex" href="#">
+                            <img src="metacriticLogo.png" alt="" srcset="" class="w-50"/>
                         </a>
                         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
@@ -37,7 +37,7 @@
                                 <li class="nav-item">
                                     <button
                                         type="button"
-                                        class="btn btn-dark me-5 my-1"
+                                        class="btn btn-black text-warning bg-black border border-2 border-warning me-5 my-1"
                                         onclick="$('.conDescripcion').removeClass('d-flex').addClass('d-none');
                                              $('.sinDescripcion').removeClass('d-none').addClass('d-flex');"
                                         >
@@ -47,7 +47,7 @@
                                 <li class="nav-item">
                                     <button
                                         type="button"
-                                        class="btn btn-dark my-1"
+                                        class="btn btn-black text-warning bg-black border border-2 border-warning my-1"
                                         onclick="$('.conDescripcion').removeClass('d-none').addClass('d-flex');
                                              $('.sinDescripcion').removeClass('d-flex').addClass('d-none');"
                                         >
@@ -59,43 +59,44 @@
                     </nav>
                 </header>
                 <main>
-                    <h1 class="display-1 text-white text-center my-4 fw-bold">TOP 100 GAMES</h1>
-                    <div class="container">
+                    <div id="top"></div>
+                    <a href="#top" type="button" class="btn btn-dark border border-warning text-warning position-fixed bottom-0 end-0 me-lg-5 mb-lg-4 z-1">
+                        ▲<br/>Volver
+                    </a>
+                    <h1 class="display-1 text-warning text-center mt-4 mb-5 fw-bold fst-italic">TOP 100 JUEGOS DE <br/> TODOS LOS TIEMPOS</h1>
+                    <div class="container z-2">
                         <div class="sinDescripcion d-none">
-                            <div class="col-12 row">
-                                <xsl:for-each select="juegos/juego">
-                                    <xsl:variable name="level1Count2" select="position()"/>
-                                    <div class="col-6 col-md-4 col-lg-3 mb-3">
-                                        <div class="border border-1 rounded my-3 h-100 bg-white position-relative bg-warning-subtle">
-                                            <div class="row flex-column">
-                                                <div class="text-center col-8 w-100">
-                                                    <h1 class="display-5 fw-bolder"><xsl:value-of select="position()"/></h1>
-                                                </div>
-                                                <div class="col-2 w-100 h-100">
-                                                    <img src="{portada}" alt="" srcset="" class="w-100" />
-                                                </div>
-                                                <div class="col-2 py-1 text-center mt-3 w-100">
-                                                    <div class=" row flex-column ">
-                                                        <xsl:choose>
-                                                            <xsl:when test="$level1Count2 &lt; 10">
-                                                                <h4 class="fw-bold"><xsl:value-of select="substring(titulo/text(),4)"/></h4>
-                                                            </xsl:when>
-                                                            <xsl:otherwise>
-                                                                <h4 class="fw-bold"><xsl:value-of select="substring(titulo/text(),5)"/></h4>
-                                                            </xsl:otherwise>
-                                                        </xsl:choose>
-                                                        <span class=""><xsl:value-of select="fecha"/></span>
-                                                        <p class="my-3 d-none"><xsl:value-of select="descripcion"/></p>
-                                                        <br/>
-                                                        <br/>
-                                                        <br/>
+                            <div class="col-12">
+                                <div class="row">
+                                    <xsl:for-each select="juegos/juego">
+                                        <xsl:variable name="level1Count2" select="position()"/>
+                                        <div class="col-6 col-md-4 col-lg-3 mb-5">
+                                            <div class="card bg-dark text-warning border-2 border-warning h-100">
+                                                <div class="row flex-column align-items-center h-100 justify-content-between text-center">
+                                                    <div class="col-2 w-100">
+                                                        <h1 class="fw-bolder border-warning border-bottom"><xsl:value-of select="position()"/></h1>
+                                                    </div>
+                                                    <div class="col-6 w-100">
+                                                        <img class="card-img-top w-100" src="{portada}" alt="Title" />
+                                                    </div>
+                                                    <div class="col-4 w-100">
+                                                        <div class="card-body">
+                                                            <xsl:choose>
+                                                                <xsl:when test="$level1Count2 &lt; 10">
+                                                                    <h4 class="card-title fw-bold"><xsl:value-of select="substring(titulo/text(),4)"/></h4>
+                                                                </xsl:when>
+                                                                <xsl:otherwise>
+                                                                    <h4 class="card-title fw-bold"><xsl:value-of select="substring(titulo/text(),5)"/></h4>
+                                                                </xsl:otherwise>
+                                                            </xsl:choose>
+                                                            <p class="card-text"><xsl:value-of select="fecha"/></p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <p class="mb-4 display-3 text-center position-absolute bottom-0 start-50 translate-middle-x  border-bottom border-warning"><xsl:value-of select="puntuacion"/></p>
                                             </div>
                                         </div>
-                                    </div>
-                                </xsl:for-each>
+                                    </xsl:for-each>
+                                </div>  
                             </div>
                         </div>
                         <div class="container conDescripcion d-flex">
@@ -105,17 +106,17 @@
                                     <xsl:choose>
                                         <xsl:when test="$level1Count mod 2=1">
                                             <div class="col-12 my-3 juego">
-                                                <div class="row border border-1 rounded h-100 bg-white justify-content-center carta">
+                                                <div class="row border border-2 border-warning rounded h-100 bg-dark justify-content-center carta text-warning">
                                                     <div class="col-1">
                                                         <div class="row align-items-center h-100">
                                                             <h2 class="col-12 display-4 fw-bolder text-center ranking"><xsl:value-of select="position()"/></h2>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 col-md-3 text-center portada my-auto">
+                                                    <div class="col-4 col-md-2 text-center portada my-auto">
                                                         <img src="{portada}"
                                                              alt="" srcset="" class="w-100" />
                                                     </div>
-                                                    <div class="col-7 col-md-8 px-5 py-4 row flex-column text-center texto">
+                                                    <div class="col-7 col-md-9 px-5 py-4 row flex-column text-center texto">
                                                         <xsl:choose>
                                                             <xsl:when test="$level1Count &lt; 10">
                                                                 <h2 class="fw-bold"><xsl:value-of select="substring(titulo/text(),4)"/></h2>
@@ -125,24 +126,24 @@
                                                             </xsl:otherwise>
                                                         </xsl:choose>
                                                         <span class="mb-2"><xsl:value-of select="fecha"/></span>
-                                                        <p class="my-auto descripcion d-none d-lg-block"><xsl:value-of select="descripcion"/></p>
+                                                        <p class="my-auto descripcion d-none d-lg-block text-white"><xsl:value-of select="descripcion"/></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </xsl:when>
                                         <xsl:otherwise>
                                             <div class="col-12 my-3 juego">
-                                                <div class="row border border-1 rounded h-100 bg-white justify-content-center flex-row-reverse carta">
+                                                <div class="row border border-2 border-warning rounded h-100 bg-dark justify-content-center flex-row-reverse carta text-warning">
                                                     <div class="col-1">
                                                         <div class="row align-items-center h-100">
                                                             <h2 class="col-12 display-4 fw-bolder text-center ranking"><xsl:value-of select="position()"/></h2>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 col-md-3 text-center portada my-auto">
+                                                    <div class="col-4 col-md-2 text-center portada my-auto">
                                                         <img src="{portada}"
                                                              alt="" srcset="" class="w-100" />
                                                     </div>
-                                                    <div class="col-7 col-md-8 px-5 py-4 row flex-column text-center texto">
+                                                    <div class="col-7 col-md-9 px-5 py-4 row flex-column text-center texto">
                                                         <xsl:choose>
                                                             <xsl:when test="$level1Count &lt; 10">
                                                                 <h3 class="fw-bold"><xsl:value-of select="substring(titulo/text(),4)"/></h3>
@@ -152,7 +153,7 @@
                                                             </xsl:otherwise>
                                                         </xsl:choose>
                                                         <span class="mb-2"><xsl:value-of select="fecha"/></span>
-                                                        <p class="my-auto descripcion d-none d-lg-block"><xsl:value-of select="descripcion"/></p>
+                                                        <p class="my-auto descripcion d-none d-lg-block text-white"><xsl:value-of select="descripcion"/></p>
                                                     </div>
                                                 </div>
                                             </div>
